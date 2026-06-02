@@ -1,0 +1,7 @@
+pandas
+numpy
+scikit-learn
+joblib
+shap
+sqlalchemy
+psycopg2-binary
