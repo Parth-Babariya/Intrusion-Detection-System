@@ -1,104 +1,90 @@
-Intrusion Detection System — Recruiter-Friendly Overview
 
-This project implements an end-to-end Intrusion Detection System (IDS) using classical machine learning. It demonstrates data preprocessing, feature engineering, model training (Random Forest), model serving in a simple pipeline, and explainability with SHAP.
+# Intrusion Detection System (IDS)
 
-Why this project matters
-- **Real-world problem:** Detects anomalous/attack traffic from network logs.
-- **Production-oriented:** Includes a repeatable pipeline, saved model artifacts, and database loading step.
-- **Explainability:** Uses SHAP to surface which features drive each attack prediction.
-- **Skills showcased:** Data engineering, ML modeling, feature engineering, model serialization, SQL integration, and reproducible code organization.
+A concise, recruiter-focused overview and instructions for the Intrusion Detection System project.
 
-Highlights (for recruiters)
-- **Clear separation of concerns:** `src/fml_project/pipeline.py` contains modular functions (`load_models`, `transform_and_predict`, `explain_attacks`, `load_to_db`, `run_pipeline`).
-- **Reproducible environment:** `requirements.txt` captures exact runtime dependencies.
-- **Artifacts included:** `FML Project/random_forest_model.pkl` and `FML Project/scaler.pkl` (used for inference).
-- **Tests & CI-ready:** simple test scaffold under `tests/` to extend for CI.
+## Overview
 
-Repository structure
-- **Source:** `src/fml_project/` (production code)
-- **Notebooks:** `FML Project/` contains exploration notebooks and reports
-- **Models:** `FML Project/random_forest_model.pkl`, `FML Project/scaler.pkl`
-- **Tests:** `tests/`
-- **Docs:** this `README.md`
+This repository demonstrates an end-to-end IDS pipeline: data preprocessing, feature engineering, model training (Random Forest), model serialization, inference pipeline, and explainability using SHAP.
 
-Quickstart (run locally)
-1. Create and activate a virtual environment, then install dependencies:
+Key outcomes:
+- Reusable inference pipeline at `src/fml_project/pipeline.py`.
+- Saved model artifacts under `FML Project/` for quick demos.
+- Notebook-driven experiments and evaluation snapshots.
 
-```bash
+## Problem Statement
+
+Network operators need fast, reliable detection of malicious or anomalous traffic. Manual triage doesn't scale and unexplainable models reduce analyst trust.
+
+## Solution
+
+We train a Random Forest classifier on tabular network flow features, use `MinMaxScaler` for numeric scaling, and SHAP for per-row explanations to help analysts triage alerts.
+
+## Highlights (for recruiters)
+
+- Clean package layout: `src/fml_project/` contains production-ready code.
+- Reproducible environment: `requirements.txt` lists dependencies.
+- Explainability: per-prediction SHAP explanations to support analyst workflows.
+
+## Tech stack
+
+- Python 3.8+
+- pandas, numpy
+- scikit-learn, joblib
+- shap
+- SQLAlchemy + PostgreSQL (optional data sink)
+
+## Repository layout
+
+- `src/fml_project/` — inference pipeline and helpers
+- `FML Project/` — notebooks, example data, and saved models
+- `tests/` — test scaffold to extend
+- `requirements.txt`, `.gitignore`, `README.md`
+
+## Quickstart
+
+1. Create and activate a virtual environment and install dependencies:
+
+```powershell
 python -m venv .venv
 .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-2. Run the inference pipeline on a CSV file (example):
+2. Run the pipeline on a CSV file (example):
 
-```bash
+```powershell
 python -m src.fml_project.pipeline
-# or specify input and DB connection
+# or run the orchestrator from Python
 python -c "from src.fml_project.pipeline import run_pipeline; run_pipeline(input_csv='FML Project/sample.csv', db_connection_str=None)"
 ```
 
-What to customize
-- `input_csv`: point to your incoming network logs CSV
-- `model_path` / `scaler_path`: swap to your latest trained artifacts
-- `db_connection_str`: provide a PostgreSQL connection string to enable `load_to_db`
+## Usage notes
 
-How this helps recruiters evaluate you
-- **Readable code**: modular functions with clear names make it easy to review your engineering choices.
-- **Impact-first README**: summarizes the problem, your contributions, and how to run the project in under a minute.
-- **Interview talking points:** data challenges, feature selection, model evaluation, explainability trade-offs, and deployment considerations.
+- Replace `input_csv`, `model_path`, and `scaler_path` with your artifacts for production use.
+- Set `db_connection_str` to a PostgreSQL DSN to enable `load_to_db`.
 
-Next steps (recommended)
-- Add a short `CONTRIBUTING.md` describing how you expect collaborators to run tests and linting.
-- Add minimal unit tests for `transform_and_predict` using a tiny synthetic CSV sample.
-- Add GitHub Actions to run tests on push (I can scaffold this for you).
+## Evaluation (from included notebooks)
 
-Contact / Attribution
+- The notebooks `FML Project/Random_forest.ipynb` and `FML Project/fml-project_2.ipynb` report weighted averages in the classification reports: **precision 0.92, recall 0.90, F1-score 0.91** (weighted). This corresponds to a weighted F1 ≈ 0.91 on the held-out test split.
+- The previously mentioned "Autoencoder + Random Forest: 89%" value was not found verbatim in saved notebook outputs; if this came from a different run, provide the output or I can reproduce the experiment and confirm.
+
+Notes on metrics:
+- For robust claims, prefer cross-validation or repeated runs and report mean ± std.
+- For imbalanced data, include per-class metrics and macro averages.
+
+## Dataset
+
+Expect a CSV of tabular network flows with fields such as `id`, `proto`, `service`, `state`, `spkts`, `dpkts`, etc. Add a small `FML Project/sample.csv` for quick local testing.
+
+## Contributing
+
+- Add unit tests under `tests/` and consider a GitHub Actions workflow to run `pytest` on push.
+- Prefer small, documented PRs and include reproducible steps for new experiments.
+
+## License & Contact
+
 - Author: Parth Babariya
 - Repo: https://github.com/Parth-Babariya/Intrusion-Detection-System
+- License: let me know if you want MIT added.
 
-License
-- If you'd like, I can add an open-source license (MIT recommended for recruiters).
-
-If you want, I can now: add CI, write a unit test, or add a one-page PDF summary suitable for attaching to applications.
-
-Problem statement
------------------
-Network operators need fast, reliable detection of malicious or anomalous traffic from streaming logs. Manual inspection doesn't scale and blind models without explainability reduce trust.
-
-What this project solves
------------------------
-- Detects likely attack flows vs normal traffic from tabular network logs.
-- Produces per-row explanations (top contributing feature) so analysts can triage alerts quickly.
-- Provides a repeatable pipeline pattern for inference, storage, and reporting.
-
-Algorithms & models
--------------------
-- Random Forest classifier (scikit-learn) — robust, interpretable at feature-level and effective for tabular data.
-- MinMaxScaler for numeric feature scaling (saved as `scaler.pkl`).
-- SHAP (TreeExplainer) for model-agnostic explanation of individual predictions.
-
-Tech stack
-----------
-- Language: Python 3.8+
-- Data: pandas, numpy
-- ML: scikit-learn, joblib
-- Explainability: shap
-- Storage & infra: SQLAlchemy + PostgreSQL (optional load step)
-- Dev tooling: Jupyter notebooks, pytest (tests/), Git, GitHub
-
-Dataset (notes)
-----------------
-The repository expects tabular network logs (CSV) with common flow features such as `id`, `proto`, `service`, `state`, `spkts`, `dpkts`, and other statistics. Example file: `FML Project/sample.csv` (create for local testing).
-
-If you'd like, I can add a short `EVALUATION.md` with example metrics and the commands to reproduce them.
-
-Results (from included notebooks)
---------------------------------
-- The notebooks `FML Project/Random_forest.ipynb` and `FML Project/fml-project_2.ipynb` include a classification report whose weighted averages are: **precision 0.92, recall 0.90, F1-score 0.91** (weighted over all classes, reported on the test split). This corresponds to an overall weighted F1 ≈ 0.91.
-- The README's previously stated "Autoencoder + Random Forest: 89%" result was not found verbatim in the saved notebook outputs; if this result came from a different run, provide the evaluation output or I can re-run the experiment to reproduce and confirm it.
-
-Notes on metrics
-----------------
-- The notebooks report per-class and weighted metrics from a single held-out test split; for stronger claims, consider cross-validation or multiple seeds and report mean ± std.
-- For imbalanced classes, include per-class precision/recall and macro-averages alongside weighted scores.
