@@ -1,7 +1,7 @@
 
 # Intrusion Detection System (IDS)
 
-A concise, recruiter-focused overview and instructions for the Intrusion Detection System project.
+An open, production-oriented Intrusion Detection System (IDS) demonstrating tabular ML for network-flow classification, model explainability, and a reusable inference pipeline.
 
 ## Overview
 
@@ -9,7 +9,7 @@ This repository demonstrates an end-to-end IDS pipeline: data preprocessing, fea
 
 Key outcomes:
 - Reusable inference pipeline at `src/fml_project/pipeline.py`.
-- Saved model artifacts under `FML Project/` for quick demos.
+- Saved model artifacts under `FML Project/` for demonstration.
 - Notebook-driven experiments and evaluation snapshots.
 
 ## Problem Statement
@@ -66,8 +66,9 @@ python -c "from src.fml_project.pipeline import run_pipeline; run_pipeline(input
 
 ## Evaluation (from included notebooks)
 
+
 - The notebooks `FML Project/Random_forest.ipynb` and `FML Project/fml-project_2.ipynb` report weighted averages in the classification reports: **precision 0.92, recall 0.90, F1-score 0.91** (weighted). This corresponds to a weighted F1 ≈ 0.91 on the held-out test split.
-- The previously mentioned "Autoencoder + Random Forest: 89%" value was not found verbatim in saved notebook outputs; if this came from a different run, provide the output or I can reproduce the experiment and confirm.
+- A previously circulated "Autoencoder + Random Forest: 89%" result was not found in the saved notebook outputs; to verify that result, reproduce the experiment and publish the evaluation artifact (recommended).
 
 Notes on metrics:
 - For robust claims, prefer cross-validation or repeated runs and report mean ± std.
@@ -79,12 +80,11 @@ Expect a CSV of tabular network flows with fields such as `id`, `proto`, `servic
 
 ## Contributing
 
-- Add unit tests under `tests/` and consider a GitHub Actions workflow to run `pytest` on push.
-- Prefer small, documented PRs and include reproducible steps for new experiments.
+- Contributions are welcome. Add unit tests under `tests/` and include reproducible steps for any new experiments.
+- Consider a CI workflow (GitHub Actions) to run `pytest` on push.
 
 ## License & Contact
 
 - Author: Parth Babariya
 - Repo: https://github.com/Parth-Babariya/Intrusion-Detection-System
-- License: let me know if you want MIT added.
 
