@@ -91,4 +91,14 @@ Dataset (notes)
 ----------------
 The repository expects tabular network logs (CSV) with common flow features such as `id`, `proto`, `service`, `state`, `spkts`, `dpkts`, and other statistics. Example file: `FML Project/sample.csv` (create for local testing).
 
+If you'd like, I can add a short `EVALUATION.md` with example metrics and the commands to reproduce them.
 
+Results (from included notebooks)
+--------------------------------
+- The notebooks `FML Project/Random_forest.ipynb` and `FML Project/fml-project_2.ipynb` include a classification report whose weighted averages are: **precision 0.92, recall 0.90, F1-score 0.91** (weighted over all classes, reported on the test split). This corresponds to an overall weighted F1 ≈ 0.91.
+- The README's previously stated "Autoencoder + Random Forest: 89%" result was not found verbatim in the saved notebook outputs; if this result came from a different run, provide the evaluation output or I can re-run the experiment to reproduce and confirm it.
+
+Notes on metrics
+----------------
+- The notebooks report per-class and weighted metrics from a single held-out test split; for stronger claims, consider cross-validation or multiple seeds and report mean ± std.
+- For imbalanced classes, include per-class precision/recall and macro-averages alongside weighted scores.
