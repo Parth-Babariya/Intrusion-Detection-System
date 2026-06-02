@@ -91,8 +91,4 @@ Dataset (notes)
 ----------------
 The repository expects tabular network logs (CSV) with common flow features such as `id`, `proto`, `service`, `state`, `spkts`, `dpkts`, and other statistics. Example file: `FML Project/sample.csv` (create for local testing).
 
-Evaluation
-----------
-Training and evaluation were performed offline (not included in the pipeline module). Typical metrics to report: accuracy, precision, recall, F1-score, and confusion matrix for the attack class. Add evaluation notebooks under `FML Project/` to show model performance snapshots.
 
-If you'd like, I can add a short `EVALUATION.md` with example metrics and the commands to reproduce them.
